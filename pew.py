@@ -63,11 +63,8 @@ def request(ip,port,time,conn,method):
                 print(resp)
                 print(resp.text)
             except:pass
-            if str(e) == "Expecting value: line 1 column 1 (char 0)":
-                print(makec("[!] servers full",9))
-            else:
-                print(e)
-                print(makec("[!] api down or idk error",9))
+            print(e)
+            print(makec("[!] idk error. api down?",9))
         sleep(_DALAY)
             
             
