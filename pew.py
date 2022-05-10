@@ -97,7 +97,7 @@ def main():
         commands=rawcommands[0].upper()
         args=rawcommands[1:]
         if commands in _METHODS:
-            if len(args) < 3 or not ((commands.startswith("HTTPS") or commands.startswith("BROWSER") or commands.startswith("SOCKET")) or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10)):
+            if (len(args) < 4) or (not ((commands.startswith("HTTPS") or commands.startswith("BROWSER") or commands.startswith("SOCKET")) or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10))):
                 print(makec(f"[*] {commands} <ip/url> <port> <time> <conn>",99))
             else: request(args[0],args[1],args[2],args[3],commands)
         else:   
