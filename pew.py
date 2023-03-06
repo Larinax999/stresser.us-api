@@ -44,7 +44,7 @@ def logo():
 \t██▄ ▀   ██    ██▀ ▀▀ ▄█▄▄▄██ ██▄ ▀  ██▄ ▀  ▄█▄▄▄██  ██▀ ▀▀     ██  ██  ██▄ ▀  
 \t▄ ▀█▄▄  ██    ██     ██      ▄ ▀█▄▄ ▄ ▀█▄▄ ██       ██         ██  ██  ▄ ▀█▄▄ 
 \t█▀▄▄█▀  ▀█▄▀ ▄██▄     ▀█▄▄▄▀ █▀▄▄█▀ █▀▄▄█▀  ▀█▄▄▄▀ ▄██▄        ▀█▄▄▀█▄ █▀▄▄█▀ """,_COLOR.logo))
-    printc(makec("\t\t\tt.me/stresseruschat and stresser.us\n",_COLOR.invite))
+    printc(makec("\t\t\tt.me/stresseruschat and stresserbest.io\n",_COLOR.invite))
 
 def realint(s):
     try:return int(s)
