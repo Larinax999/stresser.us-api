@@ -13,7 +13,7 @@ _KEY="KEY_HERE" # key from here >> https://stresser.us/
 _GEO="TH" # geolocation for tcp tfo
 _SUBNET="true" # subnet mode for amp method
 _DALAY=0.5 # wait delay per req
-_METHODS=["DNS","NTP","WSD","DVR","ARD", "TCPMB" ,"HTTPSv3","HTTPSv2","HTTPSv1"]
+_METHODS=["DNS","NTP","WSD","DVR","ARD", "TCPMB" ,"HTTPSV3","HTTPSV2","HTTPSV1"]
 _MACRO={ # full power
     "MAXTCP":["TCPMB"],
     "MAXUDP":["DNS", "NTP", "WSD", "DVR", "ARD"],
