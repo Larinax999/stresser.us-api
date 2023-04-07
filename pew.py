@@ -13,7 +13,7 @@ _KEY="KEY" # key from here >> https://stresserus.io/
 _GEO="TH" # geolocation for tcp tfo
 _SUBNET="false" # subnet mode for amp method
 _DALAY=0.5 # delay per request
-_METHODS=["DNS", "NTP", "WSD", "DVR", "ARD", "SADP",  "TCPMB", "TCPSYN", "TCPACK", "TCPTFO", " UDPPPS",  "IPRAND", "ESP", "GRE", "FIVEM", "VALVE",  "HTTPBYPASS", "HTTPSv1", "HTTPSv2",  "OVHAMP"]
+_METHODS=["DNS", "NTP", "WSD", "DVR", "ARD", "SADP",  "TCPMB", "TCPSYN", "TCPACK", "TCPTFO", "UDPPPS",  "IPRAND", "ESP", "GRE", "FIVEM", "VALVE",  "HTTPBYPASS", "HTTPSv1", "HTTPSv2",  "OVHAMP"]
 _MACRO={ # idk
     "MAXTCP":["TCPMB", "TCPSYN", "TCPACK", "TCPTFO"],
     "MAXUDP":["DNS", "NTP", "WSD", "DVR", "ARD", "SADP"],
